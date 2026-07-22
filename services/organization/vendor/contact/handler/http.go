@@ -7,8 +7,8 @@ import (
 	"strconv"
 
 	"enterprise_resource_planning/internal/shared/response"
-	"enterprise_resource_planning/services/material_management/dto"
-	"enterprise_resource_planning/services/material_management/readmodel"
+	"enterprise_resource_planning/services/organization/dto"
+	"enterprise_resource_planning/services/organization/readmodel"
 
 	errs "enterprise_resource_planning/internal/shared/errors"
 	auth "enterprise_resource_planning/services/auth/service"

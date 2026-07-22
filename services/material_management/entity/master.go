@@ -41,8 +41,8 @@ type MaterialMaster struct {
 	MaterialStatusID uint    `json:"material_status_id" gorm:"index;not null"`
 	MaterialStatus   *Status `json:"material_status" gorm:"foreignKey:MaterialStatusID"`
 
-	MaterialPhysical *MaterialPhysical `json:"material_physical"`
-	MaterialPurchase *MaterialPurchase `json:"material_purchase"`
+	MaterialPhysical   *MaterialPhysical   `json:"material_physical"`
+	MaterialPurchasing *MaterialPurchasing `json:"material_purchasing"`
 
 	MaterialConversions []*MaterialConversion `json:"material_conversions"`
 	MaterialWarehouses  []*MaterialWarehouse  `json:"material_warehouses"`
@@ -88,20 +88,20 @@ type MaterialConversion struct {
 	Denomirator uint `json:"denomirator" gorm:"type:int;not null;check:,denomirator > 0"`
 }
 
-type MaterialPurchase struct {
+type MaterialPurchasing struct {
 	gorm.Model
 
 	MaterialMasterID uint            `json:"material_master_id" gorm:"uniqueIndex;not null"`
 	MaterialMaster   *MaterialMaster `json:"material_master" gorm:"foreignKey:MaterialMasterID"`
 
-	PurchaseUnitID uint          `json:"purchase_unit_id" gorm:"index;not null"`
-	PurchaseUnit   *MaterialUnit `json:"purchase_unit" gorm:"foreignKey:PurchaseUnitID"`
+	PurchasingUnitID uint          `json:"purchasing_unit_id" gorm:"index;not null"`
+	PurchasingUnit   *MaterialUnit `json:"purchasing_unit" gorm:"foreignKey:PurchasingUnitID"`
 
-	PurchaseOrganizationID uint                  `json:"purchase_organization_id" gorm:"index;not null"`
-	PurchaseOrganization   *PurchaseOrganization `json:"purchase_organization" gorm:"foreignKey:PurchaseOrganizationID"`
+	PurchasingOrganizationID uint                    `json:"purchasing_organization_id" gorm:"index;not null"`
+	PurchasingOrganization   *PurchasingOrganization `json:"purchasing_organization" gorm:"foreignKey:PurchasingOrganizationID"`
 
-	PurchaseGroupID uint           `json:"purchase_group_id" gorm:"index;not null"`
-	PurchaseGroup   *PurchaseGroup `json:"purchase_group" gorm:"foreignKey:PurchaseGroupID"`
+	PurchasingGroupID uint             `json:"purchasing_group_id" gorm:"index;not null"`
+	PurchasingGroup   *PurchasingGroup `json:"purchasing_group" gorm:"foreignKey:PurchasingGroupID"`
 
 	OrderUnitID uint          `json:"order_unit_id" gorm:"index;not null"`
 	OrderUnit   *MaterialUnit `json:"order_unit" gorm:"foreignKey:OrderUnitID"`

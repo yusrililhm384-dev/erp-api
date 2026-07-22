@@ -5,8 +5,8 @@ import (
 	"database/sql"
 	"errors"
 
-	"enterprise_resource_planning/services/material_management/entity"
-	"enterprise_resource_planning/services/material_management/readmodel"
+	"enterprise_resource_planning/services/organization/entity"
+	"enterprise_resource_planning/services/organization/readmodel"
 
 	errs "enterprise_resource_planning/internal/shared/errors"
 

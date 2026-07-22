@@ -37,6 +37,10 @@ var ErrLanguageNotFound error = errors.New("language not found")
 
 var ErrCurrencyNotFound error = errors.New("currency not found")
 
+var ErrPaymentTermNotFound error = errors.New("payment term not found")
+
+var ErrPaymentMethodNotFound error = errors.New("payment method not found")
+
 var ErrMaterialStatusNotFound error = errors.New("material status not found")
 
 var ErrBrandNotFound error = errors.New("brand not found")

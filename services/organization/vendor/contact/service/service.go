@@ -4,9 +4,9 @@ import (
 	"context"
 	"database/sql"
 
-	"enterprise_resource_planning/services/material_management/dto"
-	"enterprise_resource_planning/services/material_management/entity"
-	"enterprise_resource_planning/services/material_management/readmodel"
+	"enterprise_resource_planning/services/organization/dto"
+	"enterprise_resource_planning/services/organization/entity"
+	"enterprise_resource_planning/services/organization/readmodel"
 
 	"gorm.io/gorm"
 )

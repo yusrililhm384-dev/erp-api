@@ -6,31 +6,37 @@ import (
 	"gorm.io/gorm"
 )
 
-type PurchaseGroup struct {
+type PurchasingGroup struct {
 	gorm.Model
-	Code        string `json:"code" grom:"not null;type:varchar(100);uniqueIndex"`
-	Name        string `json:"name" grom:"not null;type:varchar(100)"`
-	Description string `json:"description" gorm:"not null;type:text"`
+	Code                     string `json:"code" grom:"not null;type:varchar(100);uniqueIndex"`
+	Name                     string `json:"name" grom:"not null;type:varchar(100)"`
+	Description              string `json:"description" gorm:"not null;type:text"`
+
+	PurchasingOrganizationID uint   `json:"purchasing_organization_id" gorm:"index;not null"`
+	PurchasingOrganization *PurchasingOrganization `json:"purchasing_organization"`
 }
 
-type PurchaseGroupRole struct {
+type PurchasingGroupRole struct {
 	gorm.Model
 	Name string `json:"name" grom:"not null;type:varchar(100)"`
 }
 
-type PurchaseGroupMember struct {
+type PurchasingGroupMember struct {
 	gorm.Model
 
-	PurchaseGroupID uint           `json:"purchase_group_id" gorm:"not null;uniqueIndex:uq_idx_purchase_group_members_purchase_employee_role_id"`
-	PurchaseGroup   *PurchaseGroup `json:"purchase_group" gorm:"foreignKey:PurhcaseGroupID"`
+	PurchasingGroupID uint             `json:"purchasing_group_id" gorm:"not null;uniqueIndex:uq_idx_purchasing_group_members_purchasing_employee_role_id"`
+	PurchasingGroup   *PurchasingGroup `json:"purchasing_group" gorm:"foreignKey:PurhcaseGroupID"`
 
-	EmployeeID uint             `json:"employee_Id" gorm:"not null;uniqueIndex:uq_idx_purchase_group_members_purchase_employee_role_id"`
+	EmployeeID uint             `json:"employee_Id" gorm:"not null;uniqueIndex:uq_idx_purchasing_group_members_purchasing_employee_role_id"`
 	Employee   *entity.Employee `json:"employee" gorm:"foreignKey:EmployeeID"`
 
-	RoleID uint               `json:"role_id" gorm:"not null;uniqueIndex:uq_idx_purchase_group_members_purchase_employee_role_id"`
-	Role   *PurchaseGroupRole `json:"role" gorm:"foreignKey:RoleID"`
+	RoleID uint                 `json:"role_id" gorm:"not null;uniqueIndex:uq_idx_purchasing_group_members_purchasing_employee_role_id"`
+	Role   *PurchasingGroupRole `json:"role" gorm:"foreignKey:RoleID"`
 }
 
-type PurchaseOrganization struct {
+type PurchasingOrganization struct {
 	gorm.Model
+	Code        string `json:"code" grom:"not null;type:varchar(100);uniqueIndex"`
+	Name        string `json:"name" grom:"not null;type:varchar(100)"`
+	Description string `json:"description" gorm:"not null;type:text"`
 }
