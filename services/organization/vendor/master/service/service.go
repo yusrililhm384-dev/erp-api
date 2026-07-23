@@ -32,10 +32,17 @@ type Service struct {
 
 func (s *Service) Create(ctx context.Context, userId uint, req *dto.CreateVendorReq) error {
 	vendor := &entity.Vendor{
-		Name:        req.Name,
-		Description: req.Description,
-		Address:     req.Address,
-		Location:    fmt.Sprintf("SRID=4326;POINT(%f %f)", req.Location.Longitude, req.Location.Latitude),
+		Name:          req.Name,
+		Description:   req.Description,
+		Address:       req.Address,
+		Location:      fmt.Sprintf("SRID=4326;POINT(%f %f)", req.Location.Longitude, req.Location.Latitude),
+		VendorTypeID:  req.VendorTypeId,
+		CountryID:     req.CountryId,
+		LanguageID:    req.LanguageId,
+		CurrencyID:    req.CurrencyId,
+		PaymentTermID: req.PaymentTermId,
+		Code:          req.Code,
+		TaxNumber:     req.TaxNumber,
 	}
 
 	for _, c := range req.Contacts {

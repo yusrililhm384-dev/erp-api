@@ -161,7 +161,11 @@ func (r *Repository) List(ctx context.Context, pg *sql.DB, page uint) (*readmode
 func (r *Repository) Create(tx *gorm.DB, vendor *entity.Vendor) error {
 	if err := tx.Create(vendor).Error; err != nil {
 		if errors.Is(err, gorm.ErrForeignKeyViolated) {
-			return errs.ErrUserNotFound
+			return errs.ErrForeignKeyError
+		}
+
+		if errors.Is(err, gorm.ErrDuplicatedKey) {
+			return errs.ErrDuplicateError
 		}
 
 		return err
@@ -175,7 +179,11 @@ func (r *Repository) Update(tx *gorm.DB, vendor *entity.Vendor) error {
 
 	if err := res.Error; err != nil {
 		if errors.Is(err, gorm.ErrForeignKeyViolated) {
-			return errs.ErrUserNotFound
+			return errs.ErrForeignKeyError
+		}
+
+		if errors.Is(err, gorm.ErrDuplicatedKey) {
+			return errs.ErrDuplicateError
 		}
 
 		return err

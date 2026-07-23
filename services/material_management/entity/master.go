@@ -160,4 +160,7 @@ type MaterialVendor struct {
 
 	MaterialMasterID uint            `json:"material_master_id" gorm:"index"`
 	MaterialMaster   *MaterialMaster `json:"material_master" gorm:"foreignKey:MaterialMasterID"`
+
+	VendorID uint          `json:"vendor_id" gorm:"index;not null"`
+	Vendors  []*org.Vendor `json:"vendors" gorm:"foreignKey:VendorID"`
 }

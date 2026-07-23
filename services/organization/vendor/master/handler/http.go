@@ -167,8 +167,10 @@ func (h *Handler) Update(c *echo.Context) error {
 		switch {
 		case errors.Is(err, errs.ErrVendorNotFound):
 			return echo.NewHTTPError(http.StatusNotFound, "Vendor not found!")
-		case errors.Is(err, errs.ErrUserNotFound):
-			return echo.NewHTTPError(http.StatusNotFound, "User not found!")
+		case errors.Is(err, errs.ErrForeignKeyError):
+			return echo.NewHTTPError(http.StatusBadRequest, "Invalid reference id!")
+		case errors.Is(err, errs.ErrDuplicateError):
+			return echo.NewHTTPError(http.StatusConflict, "Vendor already exists!")
 		default:
 			return echo.NewHTTPError(http.StatusInternalServerError, "Oops! Something went wrong!")
 		}
@@ -182,7 +184,7 @@ func (h *Handler) Update(c *echo.Context) error {
 }
 
 func (h *Handler) Create(c *echo.Context) error {
-	c.Logger().Info("Update Vendor")
+	c.Logger().Info("Create Vendor")
 
 	sessionData, err := auth.GetSessionFromContext(c)
 
@@ -206,8 +208,12 @@ func (h *Handler) Create(c *echo.Context) error {
 	if err := h.service.Create(c.Request().Context(), sessionData.UserId, req); err != nil {
 		c.Logger().Warn(err.Error())
 
-		if errors.Is(err, errs.ErrUserNotFound) {
-			return echo.NewHTTPError(http.StatusNotFound, "User not found!")
+		if errors.Is(err, errs.ErrForeignKeyError) {
+			return echo.NewHTTPError(http.StatusBadRequest, "Invalid reference id!")
+		}
+
+		if errors.Is(err, errs.ErrDuplicateError) {
+			return echo.NewHTTPError(http.StatusConflict, "Vendor already exists!")
 		}
 
 		return echo.NewHTTPError(http.StatusInternalServerError, "Oops! Something went wrong!")
