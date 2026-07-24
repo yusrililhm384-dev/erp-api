@@ -7,8 +7,8 @@ import (
 	"strconv"
 
 	"enterprise_resource_planning/internal/shared/response"
-	"enterprise_resource_planning/services/material_management/dto"
-	"enterprise_resource_planning/services/material_management/readmodel"
+	"enterprise_resource_planning/services/organization/dto"
+	"enterprise_resource_planning/services/organization/readmodel"
 
 	errs "enterprise_resource_planning/internal/shared/errors"
 	auth "enterprise_resource_planning/services/auth/service"
@@ -44,7 +44,7 @@ func (h *Handler) List(c *echo.Context) error {
 	if err != nil {
 		c.Logger().Warn(err.Error())
 
-		if errors.Is(err, errs.ErrMaterialStatusNotFound) {
+		if errors.Is(err, errs.ErrStatusNotFound) {
 			return echo.NewHTTPError(http.StatusNotFound, "Status not found!")
 		}
 
@@ -80,7 +80,7 @@ func (h *Handler) Detail(c *echo.Context) error {
 	if err != nil {
 		c.Logger().Warn(err.Error())
 
-		if errors.Is(err, errs.ErrMaterialStatusNotFound) {
+		if errors.Is(err, errs.ErrStatusNotFound) {
 			return echo.NewHTTPError(http.StatusNotFound, "Status not found!")
 		}
 
@@ -169,7 +169,7 @@ func (h *Handler) Update(c *echo.Context) error {
 		switch {
 		case errors.Is(err, errs.ErrUserNotFound):
 			return echo.NewHTTPError(http.StatusNotFound, "User not found!")
-		case errors.Is(err, errs.ErrMaterialStatusNotFound):
+		case errors.Is(err, errs.ErrStatusNotFound):
 			return echo.NewHTTPError(http.StatusNotFound, "Status not found!")
 		default:
 			return echo.NewHTTPError(http.StatusInternalServerError, "Oops! Something went wrong!")
@@ -206,7 +206,7 @@ func (h *Handler) Delete(c *echo.Context) error {
 		switch {
 		case errors.Is(err, errs.ErrUserNotFound):
 			return echo.NewHTTPError(http.StatusNotFound, "User not found!")
-		case errors.Is(err, errs.ErrMaterialStatusNotFound):
+		case errors.Is(err, errs.ErrStatusNotFound):
 			return echo.NewHTTPError(http.StatusNotFound, "Status not found!")
 		default:
 			return echo.NewHTTPError(http.StatusInternalServerError, "Oops! Something went wrong!")

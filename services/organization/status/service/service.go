@@ -4,9 +4,9 @@ import (
 	"context"
 	"database/sql"
 
-	"enterprise_resource_planning/services/material_management/dto"
-	"enterprise_resource_planning/services/material_management/entity"
-	"enterprise_resource_planning/services/material_management/readmodel"
+	"enterprise_resource_planning/services/organization/dto"
+	"enterprise_resource_planning/services/organization/entity"
+	"enterprise_resource_planning/services/organization/readmodel"
 
 	"gorm.io/gorm"
 )
@@ -18,8 +18,8 @@ type AuditRepository interface {
 type StatusRepository interface {
 	List(ctx context.Context, pg *sql.DB, page uint) (*readmodel.StatusListResponse, error)
 	Detail(ctx context.Context, pg *sql.DB, statusId uint) (*readmodel.StatusDetail, error)
-	Create(tx *gorm.DB, ms *entity.Status) error
-	Update(tx *gorm.DB, ms *entity.Status) error
+	Create(tx *gorm.DB, status *entity.Status) error
+	Update(tx *gorm.DB, status *entity.Status) error
 	Delete(tx *gorm.DB, statusId uint) error
 }
 

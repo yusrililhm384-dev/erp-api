@@ -169,8 +169,8 @@ func (r *Repository) List(ctx context.Context, pg *sql.DB, page uint) (*readmode
 	}, nil
 }
 
-func (r *Repository) Create(tx *gorm.DB, Company *entity.Company) error {
-	result := tx.Create(Company)
+func (r *Repository) Create(tx *gorm.DB, company *entity.Company) error {
+	result := tx.Create(company)
 
 	if err := result.Error; err != nil {
 		if errors.Is(err, gorm.ErrForeignKeyViolated) {
@@ -187,8 +187,8 @@ func (r *Repository) Create(tx *gorm.DB, Company *entity.Company) error {
 	return nil
 }
 
-func (r *Repository) Update(tx *gorm.DB, Company *entity.Company) error {
-	result := tx.Model(&entity.Company{}).Updates(Company)
+func (r *Repository) Update(tx *gorm.DB, company *entity.Company) error {
+	result := tx.Model(&entity.Company{}).Updates(company)
 
 	if err := result.Error; err != nil {
 		if errors.Is(err, gorm.ErrForeignKeyViolated) {

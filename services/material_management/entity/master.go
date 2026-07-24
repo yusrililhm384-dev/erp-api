@@ -38,8 +38,8 @@ type MaterialMaster struct {
 	CountryID *uint        `json:"country_code" gorm:"index"`
 	Country   *org.Country `json:"country" gorm:"foreignKey:CountryID"`
 
-	MaterialStatusID uint    `json:"material_status_id" gorm:"index;not null"`
-	MaterialStatus   *Status `json:"material_status" gorm:"foreignKey:MaterialStatusID"`
+	MaterialStatusID uint        `json:"material_status_id" gorm:"index;not null"`
+	MaterialStatus   *org.Status `json:"material_status" gorm:"foreignKey:MaterialStatusID"`
 
 	MaterialPhysical   *MaterialPhysical   `json:"material_physical"`
 	MaterialPurchasing *MaterialPurchasing `json:"material_purchasing"`

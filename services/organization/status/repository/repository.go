@@ -6,8 +6,8 @@ import (
 	"errors"
 	"math"
 
-	"enterprise_resource_planning/services/material_management/entity"
-	"enterprise_resource_planning/services/material_management/readmodel"
+	"enterprise_resource_planning/services/organization/entity"
+	"enterprise_resource_planning/services/organization/readmodel"
 
 	errs "enterprise_resource_planning/internal/shared/errors"
 
@@ -42,7 +42,7 @@ func (r *Repository) List(ctx context.Context, pg *sql.DB, page uint) (*readmode
 
 	if err := pg.QueryRowContext(ctx, countMaterialStatusListQuery).Scan(&count); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, errs.ErrMaterialStatusNotFound
+			return nil, errs.ErrStatusNotFound
 		}
 
 		return nil, err
@@ -57,19 +57,19 @@ func (r *Repository) List(ctx context.Context, pg *sql.DB, page uint) (*readmode
 	defer rows.Close()
 
 	for rows.Next() {
-		ms := &readmodel.StatusList{}
+		status := &readmodel.StatusList{}
 
 		if err := rows.Scan(
-			&ms.Id,
-			&ms.Code,
-			&ms.Name,
-			&ms.CreatedAt,
-			&ms.UpdatedAt,
+			&status.Id,
+			&status.Code,
+			&status.Name,
+			&status.CreatedAt,
+			&status.UpdatedAt,
 		); err != nil {
 			return nil, err
 		}
 
-		data = append(data, ms)
+		data = append(data, status)
 	}
 
 	totalPages := uint(math.Ceil(float64(count) / float64(limit)))
@@ -100,7 +100,7 @@ func (r *Repository) Detail(ctx context.Context, pg *sql.DB, statusId uint) (*re
 		&data.UpdatedAt,
 	); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, errs.ErrMaterialStatusNotFound
+			return nil, errs.ErrStatusNotFound
 		}
 
 		return nil, err
@@ -109,8 +109,8 @@ func (r *Repository) Detail(ctx context.Context, pg *sql.DB, statusId uint) (*re
 	return data, nil
 }
 
-func (r *Repository) Create(tx *gorm.DB, ms *entity.Status) error {
-	if err := tx.Create(ms).Error; err != nil {
+func (r *Repository) Create(tx *gorm.DB, status *entity.Status) error {
+	if err := tx.Create(status).Error; err != nil {
 		if errors.Is(err, gorm.ErrForeignKeyViolated) {
 			return errs.ErrUserNotFound
 		}
@@ -121,8 +121,8 @@ func (r *Repository) Create(tx *gorm.DB, ms *entity.Status) error {
 	return nil
 }
 
-func (r *Repository) Update(tx *gorm.DB, ms *entity.Status) error {
-	res := tx.Model(&entity.Status{}).Updates(ms)
+func (r *Repository) Update(tx *gorm.DB, status *entity.Status) error {
+	res := tx.Model(&entity.Status{}).Updates(status)
 
 	if err := res.Error; err != nil {
 		if errors.Is(err, gorm.ErrForeignKeyViolated) {
@@ -133,7 +133,7 @@ func (r *Repository) Update(tx *gorm.DB, ms *entity.Status) error {
 	}
 
 	if res.RowsAffected == 0 {
-		return errs.ErrMaterialStatusNotFound
+		return errs.ErrStatusNotFound
 	}
 
 	return nil
@@ -151,7 +151,7 @@ func (r *Repository) Delete(tx *gorm.DB, statusId uint) error {
 	}
 
 	if res.RowsAffected == 0 {
-		return errs.ErrMaterialStatusNotFound
+		return errs.ErrStatusNotFound
 	}
 
 	return nil

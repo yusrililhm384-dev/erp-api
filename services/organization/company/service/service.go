@@ -19,8 +19,8 @@ type AuditRepository interface {
 type CompanyRepository interface {
 	List(ctx context.Context, pg *sql.DB, page uint) (*readmodel.CompanyListResponse, error)
 	Detail(ctx context.Context, pg *sql.DB, companyId uint) (*readmodel.CompanyDetail, error)
-	Create(tx *gorm.DB, mu *entity.Company) error
-	Update(tx *gorm.DB, mu *entity.Company) error
+	Create(tx *gorm.DB, company *entity.Company) error
+	Update(tx *gorm.DB, company *entity.Company) error
 	Delete(tx *gorm.DB, companyId uint) error
 }
 

@@ -33,6 +33,12 @@ var ErrCountryNotFound error = errors.New("country not found")
 
 var ErrCompanyNotFound error = errors.New("company not found")
 
+var ErrPurchasingOrganizationNotFound error = errors.New("purchasing organization not found")
+
+var ErrPurchasingGroupNotFound error = errors.New("purchasing group not found")
+
+var ErrPurchasingGroupMemberNotFound error = errors.New("purchasing group member not found")
+
 var ErrLanguageNotFound error = errors.New("language not found")
 
 var ErrCurrencyNotFound error = errors.New("currency not found")
@@ -41,7 +47,7 @@ var ErrPaymentTermNotFound error = errors.New("payment term not found")
 
 var ErrPaymentMethodNotFound error = errors.New("payment method not found")
 
-var ErrMaterialStatusNotFound error = errors.New("material status not found")
+var ErrStatusNotFound error = errors.New("status not found")
 
 var ErrBrandNotFound error = errors.New("brand not found")
 
